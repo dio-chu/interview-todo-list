@@ -1,4 +1,4 @@
-import { ConponentSize } from "../ConponentSize";
+import { ComponentSize } from "../ComponentSize";
 /**
  * IButton
  * @author dio-chu
@@ -11,7 +11,7 @@ export const IButton = {
   props: {
     size: {
       type: String,
-      default: ConponentSize.MD,
+      default: ComponentSize.MD,
     },
   },
 };

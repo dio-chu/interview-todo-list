@@ -1,29 +1,30 @@
 <template>
   <button
     :class="['common-button', sizeClass, { disabled: disable }]"
-    :disabled="disable"
-    @click="handleClick"
+    :disable="disable"
   >
     {{ label }}
   </button>
 </template>
 
 <script>
-import { ButtonSize } from "../ConponentSize";
-
+import { IButton } from "../button/iButton";
+/**
+ * CommonButton 組件
+ * @author dio-chu
+ * @component
+ * @extend IButton
+ * @description 通用的按鈕組件
+ * @example
+ * <CommonButton label="Click Me" disable @click="handleClick" />
+ */
 export default {
   name: "CommonButton",
+  mixins: [IButton],
   props: {
     label: {
       type: String,
       required: true,
-    },
-    size: {
-      type: String,
-      default: ButtonSize.MD,
-      validator(value) {
-        return Object.values(ButtonSize).includes(value);
-      },
     },
     disable: {
       type: Boolean,
@@ -35,21 +36,14 @@ export default {
       return `button-size-${this.size}`;
     },
   },
-  methods: {
-    handleClick(event) {
-      if (!this.disable) {
-        this.$emit("click", event);
-      }
-    },
-  },
 };
 </script>
 
 <style scoped>
 .common-button {
   padding: 10px 18px;
-
-  border-radius: 6px;
+  user-select: none;
+  border-radius: 10px;
   border: none;
   color: #fff;
   background-color: #00797b;
@@ -75,7 +69,7 @@ export default {
 }
 
 .button-size-sm {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* 禁用狀態 */
