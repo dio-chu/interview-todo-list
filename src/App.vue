@@ -1,5 +1,5 @@
 <template>
-  <HomePage msg="面試紀錄系統" />
+  <HomePage />
 </template>
 <script setup>
 import HomePage from "./components/HomePage.vue";
