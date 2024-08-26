@@ -1,17 +1,28 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <CommonButton label="新增面試" size="lg" @click="handleAddInterview" />
+
+  <CommonButton label="儲存" disable @click="handleSave" />
+
+  <CommonButton label="刪除" size="sm" @click="handleDelete" />
 </template>
-<script setup>
-import { ref } from "vue";
 
-defineProps({
-  msg: String,
-});
+<script>
+import CommonButton from "../common/button/CommonButton.vue";
 
-const count = ref(0);
+export default {
+  components: {
+    CommonButton,
+  },
+  methods: {
+    handleAddInterview() {
+      alert("新增面試");
+    },
+    handleSave() {
+      alert("儲存");
+    },
+    handleDelete() {
+      alert("刪除");
+    },
+  },
+};
 </script>
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
