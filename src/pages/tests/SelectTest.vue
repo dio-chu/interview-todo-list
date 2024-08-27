@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import CommonSelect from "../common/select/CommonSelect.vue";
+import CommonSelect from "../../common/select/CommonSelect.vue";
 
 export default {
   components: {
@@ -38,4 +38,3 @@ export default {
   },
 };
 </script>
-
