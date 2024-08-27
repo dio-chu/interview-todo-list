@@ -1,7 +1,9 @@
 <template>
-  <HomePage />
+  <router-view />
 </template>
-<script setup>
-import HomePage from "./components/HomePage.vue";
-</script>
-<style scoped></style>
+
+<style>
+body {
+  background-color: #ececec;
+}
+</style>
