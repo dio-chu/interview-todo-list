@@ -14,6 +14,14 @@
 <script>
 export default {
   name: "CommonSelect",
+  /**
+   * CommonSelect 組件
+   * @author dio-chu
+   * @component
+   * @description 通用的選項列
+   * @example
+   *  <CommonSelect :options="selectData" v-model="selected" />
+   */
   props: {
     options: {
       type: Array,
