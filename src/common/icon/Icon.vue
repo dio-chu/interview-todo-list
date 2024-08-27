@@ -63,9 +63,6 @@ export default {
   justify-content: center;
   padding: 0.5rem;
 }
-.icon svg {
-  fill: var(--icon-color, currentColor);
-}
 
 .icon-lg {
   width: 24px;
