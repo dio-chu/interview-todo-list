@@ -12,10 +12,19 @@ export default {
   },
   data() {
     return {
-      selectData: ["全部", "已安排面試", "已有結果"],
-      filterGroup: ["無", "無聲卡", "未錄取", "已錄取"],
-      selected: "全部",
-      selected2: "無",
+      selectData: [
+        { id: "1", value: "all", label: "全部" },
+        { id: "2", value: "interviewed", label: "已安排面試" },
+        { id: "3", value: "resulted", label: "已有結果" },
+      ],
+      filterGroup: [
+        { id: "1", value: "none", label: "無" },
+        { id: "2", value: "no_soundcard", label: "無聲卡" },
+        { id: "3", value: "not_hired", label: "未錄取" },
+        { id: "4", value: "hired", label: "已錄取" },
+      ],
+      selected: "all",
+      selected2: "none",
     };
   },
 
