@@ -29,6 +29,10 @@ export default {
   justify-content: center;
   padding: 0.5rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2476c56 (chore:icon component delete line)
 .icon-lg {
   width: 24px;
   height: 24px;
