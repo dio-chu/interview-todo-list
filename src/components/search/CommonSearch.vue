@@ -22,7 +22,7 @@ export default defineComponent({
    * @component
    * @author dio-chu
    * @description 搜尋組件
-   * @example
+   * @example   <CommonSearch v-model="searchQuery" placeholder="請輸入面試紀錄關鍵字" :icon="pencilIcon" @update:modelValue="handleSearch" />
    *
    */
   components: {
