@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { markRaw } from "vue";
 export default {
   name: "ComponentTest",
   data() {
@@ -55,7 +56,7 @@ export default {
       if (this.currentComponent) {
         try {
           const module = await import(`./tests/${this.currentComponent}.vue`);
-          this.dynamicComponent = module.default;
+          this.dynamicComponent = markRaw(module.default);
         } catch (e) {
           console.error(`無法加載組件: ${this.currentComponent}`, e);
           this.dynamicComponent = null;
