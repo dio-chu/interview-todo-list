@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <div v-if="isCheckbox">
+    <div v-if="isCheckbox" class="checkbox-column">
       <Checkbox
         :modelValue="modelValue"
         @update:modelValue="updateModelValue"
@@ -26,7 +26,7 @@ export default {
    * @author dio-chu
    * @component
    * @implement ICheckbox
-   * @description 通用的按鈕組件
+   * @description List的列表頭
    * @example
    * <ListHeader  :headers="headers"  isCheckbox   v-model="isAllSelected" />
    */
@@ -54,15 +54,18 @@ export default {
 
 <style scoped>
 .list-header {
-  display: flex;
-  font-weight: bold;
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* 確保表格布局不因內容變化而改變 */
   color: #00797b;
-  align-items: center;
-  justify-content: center;
+  font-weight: bold;
 }
 
+.checkbox-column,
 .header-item {
-  display: flex;
-  padding: 1rem 5%;
+  display: table-cell;
+  padding: 1rem;
+  text-align: center; /* 如果要內容在水平方向居中 */
+  overflow: hidden;
 }
 </style>
