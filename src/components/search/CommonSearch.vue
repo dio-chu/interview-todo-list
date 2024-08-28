@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import VueInheritance from "vue-inheritance";
 import Icon from "../icon/Icon.vue";
 
 export default {
@@ -22,11 +23,11 @@ export default {
    * @author dio-chu
    * @description 搜尋組件
    * @example   <CommonSearch v-model="searchQuery" placeholder="請輸入面試紀錄關鍵字" :icon="pencilIcon" @update:modelValue="handleSearch" />
-   *
    */
   components: {
     Icon,
   },
+  extends: VueInheritance.extend(Icon),
   props: {
     modelValue: {
       type: String,
