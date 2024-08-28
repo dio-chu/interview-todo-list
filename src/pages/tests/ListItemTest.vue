@@ -52,7 +52,7 @@ export default {
         id: 2,
         company: "104資訊科技",
         position: "前端工程師",
-        status: "已錄取",
+        status: "未錄取",
         interviewDate: "2024/8/08",
         updateDate: "2024/8/28",
       },
@@ -68,7 +68,7 @@ export default {
         id: 4,
         company: "ABC科技",
         position: "後端工程師",
-        status: "待面試",
+        status: "等待結果",
         interviewDate: "2024/8/15",
         updateDate: "2024/8/20",
       },
@@ -76,7 +76,7 @@ export default {
         id: 5,
         company: "XYZ公司",
         position: "UI設計師",
-        status: "已拒絕",
+        status: "未錄取",
         interviewDate: "2024/8/10",
         updateDate: "2024/8/22",
       },
@@ -84,9 +84,9 @@ export default {
 
     const columnColors = reactive({
       status: {
-        已錄取: "blue-text",
-        待面試: "green-text",
-        已拒絕: "red-text",
+        已錄取: "#007EE2",
+        等待結果: "#EC8500",
+        未錄取: "#D82222",
       },
     });
 
