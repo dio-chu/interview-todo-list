@@ -11,7 +11,7 @@
       v-for="header in headers"
       :key="header.key"
       class="item-data"
-      :class="getColumnClass(header.key, item[header.key])"
+      :style="getColumnStyle(header.key, item[header.key])"
     >
       <slot :name="header.key" :item="item">
         {{ item[header.key] }}
@@ -47,10 +47,22 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    /**
+     * 是否顯示複選框
+     * @author dio-chu
+     * @type {Boolean}
+     * @default false
+     */
     isCheckbox: {
       type: Boolean,
       default: false,
     },
+    /**
+     * 是否被選中
+     * @author dio-chu
+     * @type {Boolean}
+     * @required
+     */
     isSelected: {
       type: Boolean,
       required: true,
@@ -62,11 +74,19 @@ export default defineComponent({
   },
   emits: ["toggleItem"],
   methods: {
-    getColumnClass(key, value) {
+    /**
+     * 獲取列的樣式
+     * @author dio-chu
+     * @function
+     * @param {string} key - 列的鍵名
+     * @param {string} value - 列的值
+     * @returns {Object} 包含顏色的樣式對象
+     */
+    getColumnStyle(key, value) {
       if (this.colors[key] && this.colors[key][value]) {
-        return this.colors[key][value];
+        return { color: this.colors[key][value] };
       }
-      return "";
+      return {};
     },
   },
 });
@@ -86,15 +106,5 @@ export default defineComponent({
   padding: 1rem;
   text-align: center; /* 如果要內容在水平方向居中 */
   overflow: hidden;
-}
-
-.blue-text {
-  color: blue;
-}
-.red-text {
-  color: red;
-}
-.green-text {
-  color: green;
 }
 </style>
