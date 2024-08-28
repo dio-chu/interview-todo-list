@@ -19,11 +19,12 @@
 </template>
 
 <script>
+import VueInheritance from "vue-inheritance";
 import { ICheckbox } from "./ICheckbox";
 
 export default {
   name: "Checkbox",
-  mixins: [ICheckbox],
+  extends: VueInheritance.implement(ICheckbox),
 
   methods: {
     onChange(event) {
