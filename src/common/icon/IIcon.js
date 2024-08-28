@@ -1,4 +1,4 @@
-import { IconSize } from "../../enum/IconSize";
+import { IconSize } from "../../common/enum/IconSize";
 
 /**
  * IIcon
