@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.4.37",
+    "vue-inheritance": "^1.0.1-beta.5",
     "vue-router": "^4.4.3",
     "vuex": "^4.1.0"
   },
