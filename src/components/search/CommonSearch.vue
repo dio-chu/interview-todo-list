@@ -12,10 +12,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 import Icon from "../icon/Icon.vue";
 
-export default defineComponent({
+export default {
   name: "CommonSearch",
   /**
    * CommonSearch 组件
@@ -41,7 +40,7 @@ export default defineComponent({
     },
   },
   emits: ["update:modelValue"],
-});
+};
 </script>
 
 <style scoped>
