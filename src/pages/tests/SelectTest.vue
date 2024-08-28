@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import CommonSelect from "../../common/select/CommonSelect.vue";
+import CommonSelect from "../../components/select/CommonSelect.vue";
 
 export default {
   components: {
