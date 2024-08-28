@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import VueInheritance from "vue-inheritance";
 import { IIcon } from "./IIcon";
 
 export default {
@@ -17,9 +18,7 @@ export default {
    * @example
    * <Icon :icon="pencilIcon" size="lg" />
    */
-  props: {
-    ...IIcon.props,
-  },
+  extends: VueInheritance.implement(IIcon),
 };
 </script>
 

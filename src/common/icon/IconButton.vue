@@ -28,8 +28,8 @@ export default {
    * @example
    * <IconButton :icon="pencilIcon" size="lg" isClickable :disabled="false" @click="handleIconClick" />
    */
+  extends: VueInheritance.implement(IIcon),
   props: {
-    ...IIcon.props,
     isClickable: {
       type: Boolean,
       default: true,
