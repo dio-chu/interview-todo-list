@@ -29,6 +29,15 @@ export default defineComponent({
   components: {
     Checkbox,
   },
+  /**
+   * ListItem 組件
+   * @author dio-chu
+   * @component
+   * @implement ICheckbox
+   * @description List 的單一列表組件，呈現時用v-for="item in listData"，在List中結合
+   * @example
+   * <ListItem v-for="item in listData" :key="item.id" :item="item" :headers="headers" isCheckbox :isSelected="selectedItems[item.id]" :colors="columnColors" @toggleItem="toggleItem(item.id)" >
+   */
   props: {
     item: {
       type: Object,
