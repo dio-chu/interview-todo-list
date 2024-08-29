@@ -4,7 +4,7 @@
     <CommonModal
       v-model="dialog"
       title="Test Modal"
-      width="500"
+      :width="500"
       :overlayOpacity="0.4"
     >
       <p>This is the content inside the modal.</p>

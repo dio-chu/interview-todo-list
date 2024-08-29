@@ -14,7 +14,13 @@
       }"
     >
       <div class="modal-container">
-        <button class="modal-close" @click="closeModal">&times;</button>
+        <IconButton
+          class="modal-close"
+          :icon="closeCircleIcon"
+          @click="closeModal"
+          size="md"
+        />
+
         <div class="modal-header">
           <h2 class="modal-title">{{ title }}</h2>
         </div>
@@ -28,11 +34,19 @@
 
 <script>
 import VueInheritance from "vue-inheritance";
-import { IModel } from "./imodal";
+import IconButton from "../button/IconButton.vue";
+import { IModel } from "./IModal";
+import closeCircleIcon from "../../assets/close-circle.svg";
 
 export default {
   name: "CommonModal",
+  components: { IconButton },
   extends: VueInheritance.implement(IModel),
+  data() {
+    return {
+      closeCircleIcon,
+    };
+  },
   props: {
     title: {
       type: String,
@@ -95,9 +109,8 @@ export default {
 .modal-close {
   background: none;
   border: none;
-  padding: 0.5rem 1rem;
+  margin: 0.5rem;
   margin-left: auto;
-  font-size: 24px;
   cursor: pointer;
 }
 
