@@ -48,7 +48,8 @@ export default {
    *   :headers="[ { title: '編輯', key: 'edit' },...]"
    *   :data="[ { id: 1, company: 'ABC Corp', position: '工程師' },]"
    *   :isCheckbox="true" or isCheckbox
-   *   :columnColors="{ position: { '工程師': 'blue-text', '設計師': 'green-text' } }" //特殊項目的顏色
+   *   :columnColors="{ position: { '工程師': '#007EE2', '設計師': 'rgb(255, 165, 0)' } }"
+   *   支持以Hex,RGB,RGBA取名
    *   @check="<監聽checkbox變化的事件>" >
    *   <template #edit="{ item }">
    *     <button @click="editItem(item)">編輯</button>
