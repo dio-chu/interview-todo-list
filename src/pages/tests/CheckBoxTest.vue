@@ -1,5 +1,5 @@
 <template>
-  <Checkbox v-model="checkbox" />
+  <Checkbox v-model="ischeckbox" />
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   components: { Checkbox },
   data() {
     return {
-      checkbox: false,
+      ischeckbox: false,
     };
   },
 };

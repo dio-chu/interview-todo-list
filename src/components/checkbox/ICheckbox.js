@@ -8,7 +8,7 @@
 export const ICheckbox = {
   props: {
     /**
-     * 複選框的勾選狀態
+     * 勾選狀態
      * @author dio-chu
      * @type {boolean}
      * @required

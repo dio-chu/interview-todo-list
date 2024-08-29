@@ -1,5 +1,3 @@
-<!-- Checkbox.vue -->
-
 <template>
   <label class="checkbox-container">
     <input
@@ -10,9 +8,9 @@
     />
     <span
       class="checkbox-custom"
+      :class="{ ischecked: modelValue }"
       :style="{
         borderColor: color,
-        backgroundColor: modelValue ? color : 'transparent',
       }"
     ></span>
   </label>
@@ -27,6 +25,13 @@ export default {
   extends: VueInheritance.implement(ICheckbox),
 
   methods: {
+    /**
+     * 勾選狀態改變
+     * @author dio-chu
+     * @type {boolean}
+     * @required
+     * @description 用於控制複選框是否被勾選。true 表示勾選，false 表示未勾選。
+     */
     onChange(event) {
       this.$emit("update:modelValue", event.target.checked);
     },
@@ -62,6 +67,10 @@ export default {
   border: 2px solid;
   border-radius: 3px;
   transition: all 0.15s ease;
+}
+
+.checkbox-custom.ischecked {
+  background-color: var(--color, #00797b);
 }
 
 .checkbox-input:checked ~ .checkbox-custom::after {
