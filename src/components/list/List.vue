@@ -49,7 +49,7 @@ export default {
    *   :data="[ { id: 1, company: 'ABC Corp', position: '工程師' },]"
    *   :isCheckbox="true" or isCheckbox
    *   :columnColors="{ position: { '工程師': 'blue-text', '設計師': 'green-text' } }" //特殊項目的顏色
-   *   @selectionChange="handleSelectionChange" >
+   *   @check="<監聽checkbox變化的事件>" >
    *   <template #edit="{ item }">
    *     <button @click="editItem(item)">編輯</button>
    *   </template>
