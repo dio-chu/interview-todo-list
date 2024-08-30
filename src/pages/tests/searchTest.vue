@@ -1,38 +1,43 @@
 <template>
-  <Search
-    v-model="searchQuery"
-    placeholder="請輸入面試紀錄關鍵字"
-    :icon="pencilIcon"
-    @update:modelValue="handleSearch"
-  />
-  <Search
-    v-model="searchQuery"
-    :icon="pencilIcon"
-    @update:modelValue="handleSearch"
-  />
+  <div>
+    <TextField
+      v-model="textValue"
+      placeholder="請輸入文字"
+      :width="300"
+      :errorMessages="errorMessages"
+      :onBlur="handleBlur"
+      :appendInnerIcon="closeCircleIcon"
+    />
+    <TextField :width="400" :prependInnerIcon="pencilIcon" />
+    <p>當前輸入: {{ textValue }}</p>
+  </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import Search from "../../components/search/CommonSearch.vue";
+import TextField from "../../components/textfield/TextField.vue";
 import pencilIcon from "../../assets/pencil.svg";
+import closeCircleIcon from "../../assets/close-circle.svg";
 
 export default {
   components: {
-    Search,
+    TextField,
   },
-  setup() {
-    const searchQuery = ref("");
-
-    const handleSearch = (value) => {
-      console.log("input:", value);
-    };
-
+  data() {
     return {
+      textValue: "",
+      errorMessages: "",
       pencilIcon,
-      searchQuery,
-      handleSearch,
+      closeCircleIcon,
     };
+  },
+  methods: {
+    handleBlur() {
+      if (!this.textValue) {
+        this.errorMessages = "輸入框不能為空";
+      } else {
+        this.errorMessages = "";
+      }
+    },
   },
 };
 </script>
