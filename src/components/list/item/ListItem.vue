@@ -1,7 +1,7 @@
 <!-- ListItem.vue -->
 <template>
   <div class="list-item">
-    <div v-if="isCheckbox" class="checkbox-column">
+    <div v-if="needShowCheckbox" class="checkbox-column">
       <Checkbox
         :modelValue="isSelected"
         @update:modelValue="$emit('toggleItem', item.id)"
@@ -21,10 +21,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 import Checkbox from "../../checkbox/CheckBox.vue";
 
-export default defineComponent({
+export default {
   name: "ListItem",
   components: {
     Checkbox,
@@ -53,7 +52,7 @@ export default defineComponent({
      * @type {Boolean}
      * @default false
      */
-    isCheckbox: {
+    needShowCheckbox: {
       type: Boolean,
       default: false,
     },
@@ -89,7 +88,7 @@ export default defineComponent({
       return {};
     },
   },
-});
+};
 </script>
 
 <style scoped>

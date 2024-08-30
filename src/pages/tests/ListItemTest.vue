@@ -9,7 +9,7 @@
       :key="item.id"
       :item="item"
       :headers="headers"
-      isCheckbox
+      needShowCheckbox
       :isSelected="selectedItems[item.id]"
       :colors="columnColors"
       @toggleItem="toggleItem(item.id)"
