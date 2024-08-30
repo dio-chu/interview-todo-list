@@ -1,24 +1,22 @@
 <template>
   <div>
-    <CommonButton label="儲存" @click="dialog = true" />
+    <CommonButton label="刪除" @click="isModalshow = true" />
     <CommonModal
-      v-model="dialog"
-      title="Test Modal"
-      :width="500"
+      v-model:isVisible="isModalshow"
+      title="確定刪除？"
+      :width="350"
       :overlayOpacity="0.4"
     >
-      <p>This is the content inside the modal.</p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit cum,
-        perspiciatis repellendus officia possimus quae, eum harum accusantium
-        architecto enim aspernatur nesciunt, quidem maxime. Odit aperiam
-        repellendus quos excepturi rem?
-      </p>
+      <div class="modal-content">
+        <p>刪除的面試紀錄無法恢復</p>
+        <CommonButton size="sm" label="確認" @click="handleDelete" />
+      </div>
     </CommonModal>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
 import CommonModal from "../../components/modal/CommonModal.vue";
 import CommonButton from "../../components/button/CommonButton.vue";
 
@@ -26,19 +24,31 @@ export default {
   components: {
     CommonModal,
     CommonButton,
+    AddInterviewModal,
   },
-  data() {
+  setup() {
+    const isModalshow = ref(false);
+    const handleDelete = () => {
+      // 處理刪除邏輯
+      isDeleteModalOpen.value = false;
+    };
+
     return {
-      dialog: false,
+      isModalshow,
+      handleDelete,
     };
   },
 };
 </script>
 
 <style scoped>
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.modal-content button {
+  margin-top: 1rem;
 }
 </style>

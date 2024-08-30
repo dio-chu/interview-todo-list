@@ -9,21 +9,21 @@
 export const IModel = {
   props: {
     /**
-     * modelValue
+     * isVisible
      * @author dio-chu
-     * @description v-model 控制modal組件是否出現
+     * @description v-model:isVisible 控制modal組件是否出現
      */
-    modelValue: {
+    isVisible: {
       type: Boolean,
       default: false,
     },
     minWidth: {
       type: Number,
-      default: 400,
+      default: 100,
     },
     minHeight: {
       type: Number,
-      default: 300,
+      default: 50,
     },
     width: {
       type: Number,

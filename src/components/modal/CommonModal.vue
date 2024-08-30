@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div
-      v-if="modelValue"
+      v-if="isVisible"
       class="modal-overlay"
       :class="{ 'backdrop-click': isBackdropClick }"
       @click="handleOverlayClick"
@@ -22,7 +22,7 @@
         />
 
         <div class="modal-header">
-          <h2 class="modal-title">{{ title }}</h2>
+          <p class="modal-title">{{ title }}</p>
         </div>
         <div class="modal-content">
           <slot></slot>
@@ -52,6 +52,11 @@ export default {
       type: String,
       required: true,
     },
+    /**
+     * overlayOpacity
+     * @author dio-chu
+     * @description 背景濾鏡的透明度
+     */
     overlayOpacity: {
       type: Number,
       default: 0.4,
@@ -64,7 +69,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("update:modelValue", false);
+      this.$emit("update:isVisible", false);
     },
   },
 };
@@ -115,7 +120,8 @@ export default {
 }
 
 .modal-content {
-  padding: 16px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
   flex-grow: 1;
   overflow-y: auto;
 }
