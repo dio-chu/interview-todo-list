@@ -2,15 +2,19 @@
   <label class="checkbox-container">
     <input
       type="checkbox"
-      :checked="modelValue"
+      :checked="isChecked"
       @change="onChange"
+      :disabled="disabled"
       class="checkbox-input"
     />
     <span
       class="checkbox-custom"
-      :class="{ ischecked: modelValue }"
+      :class="{
+        'checkbox-custom--checked': isChecked,
+        'checkbox-custom--disabled': disabled && isChecked,
+      }"
       :style="{
-        borderColor: color,
+        borderColor: disabled ? '#858585' : color,
       }"
     ></span>
   </label>
@@ -33,7 +37,7 @@ export default {
      * @description 用於控制複選框是否被勾選。true 表示勾選，false 表示未勾選。
      */
     onChange(event) {
-      this.$emit("update:modelValue", event.target.checked);
+      this.$emit("update:isChecked", event.target.checked);
     },
   },
 };
@@ -46,21 +50,17 @@ export default {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: 10px;
+  margin: 0px 3px;
 }
 
 .checkbox-input {
   position: absolute;
+  pointer-events: none;
   opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
 }
-
+/* 自訂checkbox視覺 */
 .checkbox-custom {
   position: absolute;
-  top: 0;
-  left: 0;
   height: 20px;
   width: 20px;
   background-color: transparent;
@@ -68,15 +68,17 @@ export default {
   border-radius: 3px;
   transition: all 0.15s ease;
 }
-
-.checkbox-custom.ischecked {
-  background-color: var(--color, #00797b);
+.checkbox-custom--disabled.checkbox-custom--checked {
+  background-color: #858585;
 }
 
+.checkbox-custom--checked {
+  background-color: var(--color, #00797b);
+}
+/* 勾勾 */
 .checkbox-input:checked ~ .checkbox-custom::after {
   content: "";
-  position: absolute;
-  display: block;
+  position: absolute; /* position: absolute; 時，預設會將 display 設定為 block */
   left: 6px;
   top: 2px;
   width: 5px;
