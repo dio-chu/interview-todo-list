@@ -1,7 +1,7 @@
 <template>
   <ListHeader
     :headers="headers"
-    isCheckbox
+    needShowCheckbox
     v-model="isAllSelected"
   ></ListHeader>
 </template>
