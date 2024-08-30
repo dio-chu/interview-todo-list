@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <div v-if="isCheckbox" class="checkbox-column">
+    <div v-if="needShowCheckbox" class="checkbox-column">
       <Checkbox
         :modelValue="modelValue"
         @update:modelValue="updateModelValue"
@@ -38,7 +38,7 @@ export default {
       type: Array,
       required: true,
     },
-    isCheckbox: {
+    needShowCheckbox: {
       type: Boolean,
       default: false,
     },
@@ -65,7 +65,6 @@ export default {
 .header-item {
   display: table-cell;
   padding: 1rem;
-  text-align: center; /* 如果要內容在水平方向居中 */
-  overflow: hidden;
+  text-align: center; /* 各欄位至中 */
 }
 </style>
