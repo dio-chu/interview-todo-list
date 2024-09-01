@@ -1,10 +1,9 @@
-<!-- ListItem.vue -->
 <template>
   <div class="list-item">
     <div v-if="needShowCheckbox" class="checkbox-column">
       <Checkbox
-        :modelValue="isSelected"
-        @update:modelValue="$emit('toggleItem', item.id)"
+        :isChecked="isSelected"
+        @update:isChecked="$emit('toggleItem', item.id)"
       />
     </div>
     <div
@@ -32,7 +31,6 @@ export default {
    * ListItem 組件
    * @author dio-chu
    * @component
-   * @implement ICheckbox
    * @description List 的單一列表組件，呈現時用v-for="item in listData"，在List中結合
    * @example
    * <ListItem v-for="item in listData" :key="item.id" :item="item" :headers="headers" isCheckbox :isSelected="selectedItems[item.id]" :colors="columnColors" @toggleItem="toggleItem(item.id)" >
@@ -65,6 +63,7 @@ export default {
     isSelected: {
       type: Boolean,
       required: true,
+      default: false,
     },
     colors: {
       type: Object,
@@ -75,7 +74,6 @@ export default {
   methods: {
     /**
      * 獲取列的樣式
-     * @author dio-chu
      * @function
      * @param {string} key - 列的鍵名
      * @param {string} value - 列的值
