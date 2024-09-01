@@ -2,8 +2,8 @@
   <div class="list-header">
     <div v-if="needShowCheckbox" class="checkbox-column">
       <Checkbox
-        :modelValue="modelValue"
-        @update:modelValue="updateModelValue"
+        :isChecked="isChecked"
+        @update:isChecked="updateIsChecked"
         :color="color"
       />
     </div>
@@ -15,7 +15,7 @@
 
 <script>
 import VueInheritance from "vue-inheritance/src";
-import Checkbox from "../../checkbox/CheckBox.vue";
+import Checkbox from "../../checkbox/Checkbox.vue";
 import { ICheckbox } from "../../checkbox/ICheckbox";
 
 export default {
@@ -42,11 +42,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    isChecked: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:isChecked"],
   methods: {
-    updateModelValue(value) {
-      this.$emit("update:modelValue", value);
+    updateIsChecked(value) {
+      this.$emit("update:isChecked", value);
     },
   },
 };

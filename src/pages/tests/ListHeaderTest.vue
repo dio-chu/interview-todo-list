@@ -2,7 +2,7 @@
   <ListHeader
     :headers="headers"
     needShowCheckbox
-    v-model="isAllSelected"
+    v-model:isChecked="isAllSelected"
   ></ListHeader>
 </template>
 
