@@ -1,10 +1,13 @@
 <template>
   <List
     :headers="headers"
-    :data="listData"
-    isCheckbox
+    :data="data"
+    needShowCheckbox
     :columnColors="columnColors"
-    @check="handleSelectionChange"
+    :selectedItems="selectedItems"
+    :isAllSelected="isAllSelected"
+    @toggle-item="toggleItem"
+    @toggle-all="toggleAllItems"
   >
     <template #edit="{ item }">
       <button @click="editItem(item)">編輯</button>
@@ -17,7 +20,6 @@
 
 <script>
 import List from "../../components/list/List.vue";
-
 export default {
   name: "TestListPage",
   components: {
@@ -33,7 +35,7 @@ export default {
         { title: "面試日期", key: "interviewDate" },
         { title: "更新日期", key: "updateDate" },
       ],
-      listData: [
+      data: [
         {
           id: 1,
           company: "104資訊科技",
@@ -82,11 +84,22 @@ export default {
           未錄取: "#D82222",
         },
       },
+      selectedItems: {},
+      isAllSelected: false,
     };
   },
   methods: {
-    handleSelectionChange(selectedItems) {
-      console.log("Selected items:", selectedItems);
+    toggleItem(itemId) {
+      this.selectedItems[itemId] = !this.selectedItems[itemId];
+      this.isAllSelected = this.data.every(
+        (item) => this.selectedItems[item.id]
+      );
+    },
+    toggleAllItems(isChecked) {
+      this.isAllSelected = isChecked;
+      this.data.forEach((item) => {
+        this.selectedItems[item.id] = isChecked;
+      });
     },
     getStatusClass(status) {
       return this.columnColors.status[status] || "";
