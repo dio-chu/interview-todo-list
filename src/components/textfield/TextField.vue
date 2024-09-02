@@ -11,7 +11,7 @@
         @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         :readonly="readonly"
-        @blur="handleBlur"
+        @blur="$emit('blur', $event)"
       />
       <div v-if="appendInnerIcon">
         <Icon :icon="appendInnerIcon" />
@@ -53,10 +53,6 @@ export default {
      * @type {Function}
      * @default null
      */
-    onBlur: {
-      type: Function,
-      default: null,
-    },
     prependInnerIcon: {
       type: String,
       default: "",
@@ -69,14 +65,7 @@ export default {
       type: String,
     },
   },
-
-  methods: {
-    handleBlur(event) {
-      if (this.onBlur) {
-        this.onBlur(event);
-      }
-    },
-  },
+  emits: ["update:modelValue", "blur"],
 };
 </script>
 

@@ -5,7 +5,7 @@
       placeholder="請輸入文字"
       :width="300"
       :errorMessages="errorMessages"
-      :onBlur="handleBlur"
+      @blur="handleBlur"
       :appendInnerIcon="closeCircleIcon"
     />
     <TextField :width="400" :prependInnerIcon="pencilIcon" />
