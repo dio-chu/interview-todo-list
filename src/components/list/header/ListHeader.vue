@@ -11,7 +11,6 @@
 
 <script>
 import Checkbox from "../../checkbox/Checkbox.vue";
-
 export default {
   name: "ListHeader",
   /**
