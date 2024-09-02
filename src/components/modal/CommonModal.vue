@@ -1,19 +1,23 @@
 <template>
   <transition name="modal">
     <div
-      v-if="isVisible"
+      v-show="isVisible"
       class="modal-overlay"
       :class="{ 'backdrop-click': isBackdropClick }"
       @click="handleOverlayClick"
       :style="{
-        '--overlay-opacity': overlayOpacity,
-        '--min-width': `${minWidth}px`,
-        '--min-height': `${minHeight}px`,
-        '--width': width ? `${width}px` : 'auto',
-        '--height': height ? `${height}px` : 'auto',
+        backgroundColor: `rgba(0, 0, 0, ${overlayOpacity})`,
       }"
     >
-      <div class="modal-container">
+      <div
+        class="modal-container"
+        :style="{
+          minWidth: `${minWidth}px`,
+          minHeight: `${minHeight}px`,
+          width: width ? `${width}px` : 'auto',
+          height: height ? `${height}px` : 'auto',
+        }"
+      >
         <IconButton
           class="modal-close"
           :icon="closeCircleIcon"
@@ -69,7 +73,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("update:isVisible", false);
+      this.$emit("close-modal");
     },
   },
 };
@@ -82,7 +86,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, var(--overlay-opacity));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,10 +98,6 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  min-width: var(--min-width);
-  min-height: var(--min-height);
-  width: var(--width, auto);
-  height: var(--height, auto);
 }
 
 .modal-title {

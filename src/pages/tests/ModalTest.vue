@@ -6,6 +6,7 @@
       title="確定刪除？"
       :width="350"
       :overlayOpacity="0.4"
+      @close-modal="handleDelete"
     >
       <div class="modal-content">
         <p>刪除的面試紀錄無法恢復</p>
@@ -24,13 +25,12 @@ export default {
   components: {
     CommonModal,
     CommonButton,
-    AddInterviewModal,
   },
   setup() {
     const isModalshow = ref(false);
     const handleDelete = () => {
       // 處理刪除邏輯
-      isDeleteModalOpen.value = false;
+      isModalshow.value = false;
     };
 
     return {
