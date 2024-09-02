@@ -18,7 +18,7 @@ export const ICheckbox = {
       type: Boolean,
       required: true,
     },
-    color: {
+    checkedColor: {
       type: String,
       default: "#00797B",
     },
