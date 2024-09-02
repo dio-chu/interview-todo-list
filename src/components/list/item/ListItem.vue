@@ -52,6 +52,7 @@ export default {
     },
     /**
      * 是否顯示複選框
+     * @author dio-chu
      * @type {Boolean}
      * @default false
      */
@@ -61,6 +62,7 @@ export default {
     },
     /**
      * 是否被選中
+     * @author dio-chu
      * @type {Boolean}
      * @required
      */
