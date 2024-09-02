@@ -8,19 +8,23 @@
 export const ICheckbox = {
   props: {
     /**
-     * 複選框的勾選狀態
+     * isChecked
      * @author dio-chu
      * @type {boolean}
      * @required
      * @description 用於控制複選框是否被勾選。true 表示勾選，false 表示未勾選。
      */
-    modelValue: {
+    isChecked: {
       type: Boolean,
       required: true,
     },
-    color: {
+    checkedColor: {
       type: String,
       default: "#00797B",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   /**
@@ -29,5 +33,5 @@ export const ICheckbox = {
    * @type {boolean}
    * @description 當複選框的狀態改變時觸發。新的勾選狀態作為參數傳遞。
    */
-  emits: ["update:modelValue"],
+  emits: ["update:isChecked"],
 };
