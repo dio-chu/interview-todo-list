@@ -1,27 +1,33 @@
 <template>
   <div class="list-container">
-    <ListHeader
-      :headers="headers"
-      :needShowCheckbox="needShowCheckbox"
-      :isChecked="isAllSelected"
-      @update:isChecked="$emit('toggle-all', $event)"
-    />
-    <ListItem
-      v-for="item in data"
-      :key="item.id"
-      :item="item"
-      :headers="headers"
-      :needShowCheckbox="needShowCheckbox"
-      :isSelected="selectedItems[item.id]"
-      :colors="columnColors"
-      @toggleItem="$emit('toggle-item', item.id)"
+    <slot name="header" v-bind="{ headers, needShowCheckbox, isAllSelected }">
+      <ListHeader
+        :headers="headers"
+        :needShowCheckbox="needShowCheckbox"
+        :isChecked="isAllSelected"
+        @update:isChecked="$emit('toggle-all', $event)"
+    /></slot>
+    <slot
+      name="header"
+      v-bind="{ data, headers, needShowCheckbox, columnColors }"
     >
-      <template v-for="header in headers" #[header.key]="{ item }">
-        <slot :name="header.key" :item="item">
-          {{ item[header.key] }}
-        </slot>
-      </template>
-    </ListItem>
+      <ListItem
+        v-for="item in data"
+        :key="item.id"
+        :item="item"
+        :headers="headers"
+        :needShowCheckbox="needShowCheckbox"
+        :isSelected="item.isSelected"
+        :colors="columnColors"
+        @toggleItem="$emit('toggle-item', item.id)"
+      >
+        <template v-for="header in headers" #[header.key]="{ item }">
+          <slot :name="header.key" :item="item">
+            {{ item[header.key] }}
+          </slot>
+        </template>
+      </ListItem></slot
+    >
   </div>
 </template>
 
@@ -59,10 +65,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    selectedItems: {
-      type: Object,
-      default: () => ({}),
-    },
+
     isAllSelected: {
       type: Boolean,
       default: false,

@@ -4,7 +4,6 @@
     :data="data"
     needShowCheckbox
     :columnColors="columnColors"
-    :selectedItems="selectedItems"
     :isAllSelected="isAllSelected"
     @toggle-item="toggleItem"
     @toggle-all="toggleAllItems"
@@ -43,6 +42,7 @@ export default {
           status: "已錄取",
           interviewDate: "2024/8/08",
           updateDate: "2024/8/28",
+          isSelected: false,
         },
         {
           id: 2,
@@ -51,6 +51,7 @@ export default {
           status: "未錄取",
           interviewDate: "2024/8/08",
           updateDate: "2024/8/28",
+          isSelected: false,
         },
         {
           id: 3,
@@ -59,6 +60,7 @@ export default {
           status: "已錄取",
           interviewDate: "2024/8/08",
           updateDate: "2024/8/28",
+          isSelected: false,
         },
         {
           id: 4,
@@ -67,6 +69,7 @@ export default {
           status: "等待結果",
           interviewDate: "2024/8/15",
           updateDate: "2024/8/20",
+          isSelected: false,
         },
         {
           id: 5,
@@ -75,6 +78,7 @@ export default {
           status: "未錄取",
           interviewDate: "2024/8/10",
           updateDate: "2024/8/22",
+          isSelected: false,
         },
       ],
       columnColors: {
@@ -84,22 +88,24 @@ export default {
           未錄取: "#D82222",
         },
       },
-      selectedItems: {},
       isAllSelected: false,
     };
   },
   methods: {
     toggleItem(itemId) {
-      this.selectedItems[itemId] = !this.selectedItems[itemId];
-      this.isAllSelected = this.data.every(
-        (item) => this.selectedItems[item.id]
-      );
+      const item = this.data.find((i) => i.id === itemId);
+      if (item) {
+        item.isSelected = !item.isSelected;
+        this.isAllSelected = this.data.every((i) => i.isSelected);
+        console.log("Selected item:", item);
+      }
     },
     toggleAllItems(isChecked) {
       this.isAllSelected = isChecked;
       this.data.forEach((item) => {
-        this.selectedItems[item.id] = isChecked;
+        item.isSelected = isChecked;
       });
+      console.log("All items selected:", isChecked);
     },
     getStatusClass(status) {
       return this.columnColors.status[status] || "";
