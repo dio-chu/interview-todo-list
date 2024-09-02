@@ -8,6 +8,7 @@
         type="text"
         class="text-field-input"
         :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         :readonly="readonly"
         @blur="handleBlur"
@@ -43,15 +44,6 @@ export default {
    * <TextField v-model="textValue" placeholder="請輸入文字" :errorMessages="errorMessages" :onBlur="handleBlur" />
    */
   props: {
-    /**
-     * modelValue <-->v-model
-     * @type String
-     * @default "" 直接用v-model取得輸入值 v-model="textValue"
-     */
-    modelValue: {
-      type: String,
-      default: "",
-    },
     readonly: {
       type: Boolean,
       default: false,
@@ -77,7 +69,7 @@ export default {
       type: String,
     },
   },
-  emits: ["update:modelValue"],
+
   methods: {
     handleBlur(event) {
       if (this.onBlur) {

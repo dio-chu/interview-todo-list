@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     handleBlur() {
+      console.log(this.textValue);
       if (!this.textValue) {
         this.errorMessages = "輸入框不能為空";
       } else {
