@@ -6,14 +6,9 @@
         @update:isChecked="$emit('toggleItem', item.id)"
       />
     </div>
-    <div
-      v-for="header in headers"
-      :key="header.key"
-      class="item-data"
-      :style="getColumnStyle(header.key, item[header.key])"
-    >
-      <slot :name="header.key" :item="item">
-        {{ item[header.key] }}
+    <div v-for="column in columns" :key="column.key" class="item-data">
+      <slot :name="column.key" :item="item">
+        {{ item[column.key] }}
       </slot>
     </div>
   </div>
@@ -30,17 +25,28 @@ export default {
   /**
    * ListItem 組件
    * @author dio-chu
-   * @component
-   * @description List 的單一列表組件，呈現時用v-for="item in listData"，在List中結合
+   * @description List 的單一列表組件，呈現時用 v-for="item in listData"，在父組件中結合
    * @example
-   * <ListItem v-for="item in listData" :key="item.id" :item="item" :headers="headers" isCheckbox :isSelected="selectedItems[item.id]" :colors="columnColors" @toggleItem="toggleItem(item.id)" >
+   * <ListItem
+   *   v-for="item in listData"
+   *   :key="item.id"
+   *   :item="item"
+   *   :columns="columns"
+   *   needShowCheckbox
+   *   :isSelected="selectedItems[item.id]"
+   *   @toggleItem="toggleItem(item.id)"
+   * >
+   *   <template #edit="{ item }">
+   *     <button @click="editItem(item)">編輯</button>
+   *   </template>
+   * </ListItem>
    */
   props: {
     item: {
       type: Object,
       required: true,
     },
-    headers: {
+    columns: {
       type: Array,
       required: true,
     },
@@ -65,27 +71,8 @@ export default {
       required: true,
       default: false,
     },
-    colors: {
-      type: Object,
-      default: () => ({}),
-    },
   },
   emits: ["toggleItem"],
-  methods: {
-    /**
-     * 獲取列的樣式
-     * @function
-     * @param {string} key - 列的鍵名
-     * @param {string} value - 列的值
-     * @returns {Object} 包含顏色的樣式對象
-     */
-    getColumnStyle(key, value) {
-      if (this.colors[key] && this.colors[key][value]) {
-        return { color: this.colors[key][value] };
-      }
-      return {};
-    },
-  },
 };
 </script>
 

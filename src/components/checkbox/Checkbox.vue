@@ -14,7 +14,7 @@
         'checkbox-custom--disabled': disabled && isChecked,
       }"
       :style="{
-        borderColor: disabled ? '#858585' : color,
+        borderColor: disabled ? '#858585' : checkedColor,
       }"
     ></span>
   </label>

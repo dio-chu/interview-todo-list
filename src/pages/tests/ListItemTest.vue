@@ -1,4 +1,3 @@
-<!-- TestPage.vue -->
 <template>
   <div>
     <button @click="toggleAllItems">
@@ -8,10 +7,9 @@
       v-for="item in listData"
       :key="item.id"
       :item="item"
-      :headers="headers"
+      :columns="columns"
       needShowCheckbox
       :isSelected="selectedItems[item.id]"
-      :colors="columnColors"
       @toggleItem="toggleItem(item.id)"
     >
       <template #edit="{ item }">
@@ -30,7 +28,7 @@ export default {
     ListItem,
   },
   setup() {
-    const headers = [
+    const columns = [
       { title: "編輯", key: "edit" },
       { title: "公司名稱", key: "company" },
       { title: "面試職位", key: "position" },
@@ -117,7 +115,7 @@ export default {
     };
 
     return {
-      headers,
+      columns,
       listData,
       isAllSelected,
       selectedItems,
@@ -135,7 +133,6 @@ button {
   margin-bottom: 10px;
   padding: 5px 10px;
   background-color: #7696d1;
-
   color: white;
   border: none;
   cursor: pointer;
