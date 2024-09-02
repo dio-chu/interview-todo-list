@@ -1,11 +1,7 @@
 <template>
   <div class="list-header">
     <div v-if="needShowCheckbox" class="checkbox-column">
-      <Checkbox
-        :isChecked="isChecked"
-        @update:isChecked="updateIsChecked"
-        :color="color"
-      />
+      <Checkbox :isChecked="isChecked" @update:isChecked="updateIsChecked" />
     </div>
     <div v-for="header in headers" :key="header.key" class="header-item">
       {{ header.title }}
@@ -14,13 +10,10 @@
 </template>
 
 <script>
-import VueInheritance from "vue-inheritance/src";
 import Checkbox from "../../checkbox/Checkbox.vue";
-import { ICheckbox } from "../../checkbox/ICheckbox";
 
 export default {
   name: "ListHeader",
-  extends: VueInheritance.implement(ICheckbox),
   /**
    * ListHeader 組件
    * @author dio-chu
