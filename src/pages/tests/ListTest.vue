@@ -8,10 +8,11 @@
     @toggle-item="toggleItem"
     @toggle-all="toggleAllItems"
   >
-    <template #edit="{ item }">
+    <template v-slot:edit="{ item }">
       <button @click="editItem(item)">編輯</button>
     </template>
-    <template #status="{ item }">
+
+    <template v-slot:status="{ item }">
       <span :class="getStatusClass(item.status)">{{ item.status }}</span>
     </template>
   </List>
