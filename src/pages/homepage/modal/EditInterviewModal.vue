@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import CommonModal from "../components/modal/CommonModal.vue";
-import CommonButton from "../components/button/CommonButton.vue";
-import CommonSelect from "../components/select/CommonSelect.vue";
+import CommonModal from "../../../components/modal/CommonModal.vue";
+import CommonButton from "../../../components/button/CommonButton.vue";
+import CommonSelect from "../../../components/select/CommonSelect.vue";
 
 export default {
   components: { CommonModal, CommonButton, CommonSelect },

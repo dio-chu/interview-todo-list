@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import CommonModal from "../components/modal/CommonModal.vue";
-import CommonButton from "../components/button/CommonButton.vue";
+import CommonModal from "../../../components/modal/CommonModal.vue";
+import CommonButton from "../../../components/button/CommonButton.vue";
 
 export default {
   components: { CommonModal, CommonButton },

@@ -49,15 +49,15 @@
 </template>
 
 <script>
-import CommonButton from "../components/button/CommonButton.vue";
-import List from "../components/list/List.vue";
-import IconButton from "../components/button/IconButton.vue";
-import CommonModal from "../components/modal/CommonModal.vue";
+import CommonButton from "../../../components/button/CommonButton.vue";
+import List from "../../../components/list/List.vue";
+import IconButton from "../../../components/button/IconButton.vue";
+import CommonModal from "../../../components/modal/CommonModal.vue";
 import DeleteInterviewModal from "../modal/DeleteInterviewModal.vue";
 import EditInterviewModal from "../modal/EditInterviewModal.vue";
-import pencilIcon from "../assets/pencil.svg";
+import pencilIcon from "../../../assets/pencil.svg";
 // 之後放入 Vuex
-import { mockData } from "../data";
+import { mockData } from "../../../data";
 
 export default {
   components: {
@@ -100,6 +100,7 @@ export default {
     },
   },
   methods: {
+    //增刪查改 之後移植vuex
     openModal() {
       this.showModal = true;
     },

@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import CommonButton from "../components/button/CommonButton.vue";
-import CommonSelect from "../components/select/CommonSelect.vue";
-import TextField from "../components/textfield/TextField.vue";
-import ListContainer from "../containers/ListContainer.vue";
-import CommonModal from "../components/modal/CommonModal.vue";
-import AddInterviewModal from "../modal/AddInterviewModal.vue";
-import magnify from "../assets/magnify.svg";
+import CommonButton from "../../components/button/CommonButton.vue";
+import CommonSelect from "../../components/select/CommonSelect.vue";
+import TextField from "../../components/textfield/TextField.vue";
+import ListContainer from "./containers/ListContainer.vue";
+import CommonModal from "../../components/modal/CommonModal.vue";
+import AddInterviewModal from "./modal/AddInterviewModal.vue";
+import magnify from "../../assets/magnify.svg";
 
 export default {
   components: {
