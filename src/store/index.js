@@ -1,10 +1,5 @@
 import { createStore } from "vuex";
-import example from "./modules/example";
 
-const store = createStore({
-  modules: {
-    example,
-  },
-});
+const store = createStore({});
 
 export default store;

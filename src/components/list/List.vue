@@ -14,7 +14,7 @@
       >
         <ListItem
           :item="item"
-          :headers="headers"
+          :columns="headers"
           :needShowCheckbox="needShowCheckbox"
           :isSelected="item.isSelected"
           :colors="columnColors"

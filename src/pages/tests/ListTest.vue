@@ -13,7 +13,9 @@
     </template>
 
     <template v-slot:status="{ item }">
-      <span :class="getStatusClass(item.status)">{{ item.status }}</span>
+      <span :style="{ color: columnColors.status[item.status] }">{{
+        item.status
+      }}</span>
     </template>
   </List>
 </template>
@@ -107,9 +109,6 @@ export default {
         item.isSelected = isChecked;
       });
       console.log("All items selected:", isChecked);
-    },
-    getStatusClass(status) {
-      return this.columnColors.status[status] || "";
     },
     editItem(item) {
       console.log("Editing item:", item);

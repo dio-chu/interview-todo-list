@@ -15,6 +15,11 @@
       <template #edit="{ item }">
         <button @click="editItem(item)">編輯</button>
       </template>
+      <template #status="{ item }">
+        <span :style="{ color: columnColors.status[item.status] }">
+          {{ item.status }}
+        </span>
+      </template>
     </ListItem>
   </div>
 </template>
@@ -29,6 +34,7 @@ export default {
   },
   setup() {
     const columns = [
+      // 重命名為 columns
       { title: "編輯", key: "edit" },
       { title: "公司名稱", key: "company" },
       { title: "面試職位", key: "position" },
