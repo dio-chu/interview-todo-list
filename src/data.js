@@ -1,3 +1,4 @@
+// 面試紀錄list 標題
 export const headers = [
   { title: "編輯", key: "edit" },
   { title: "公司名稱", key: "company" },
@@ -7,6 +8,7 @@ export const headers = [
   { title: "更新日期", key: "updateDate" },
 ];
 
+// 面試紀錄list item 特殊顏色
 export const columnColors = {
   status: {
     已錄取: "#007EE2",
@@ -15,6 +17,7 @@ export const columnColors = {
   },
 };
 
+// 面試紀錄list item
 export const data = [
   {
     id: 1,
@@ -63,7 +66,7 @@ export const data = [
   },
 ];
 
-// edit
+// 編輯變更面試紀錄狀態時的select （基本上不會變動）
 export const statusGroup = [
   { id: "1", value: "none", label: "無" },
   { id: "2", value: "no_soundcard", label: "無聲卡" },
@@ -73,7 +76,7 @@ export const statusGroup = [
 
 export const positions = ["前端工程師", "UIUX設計師", "全端設計師"];
 
-//home filter
+//homepage對於的 filter select  （基本上不會變動）
 export const selectData = [
   { id: "1", value: "all", label: "全部" },
   { id: "2", value: "interviewed", label: "已安排面試" },

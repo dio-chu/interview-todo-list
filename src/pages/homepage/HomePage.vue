@@ -1,9 +1,9 @@
 <template>
   <div class="interview-management">
-    <div class="interview-managementactions mb-4">
-      <CommonButton label="新增面試" size="lg" @click="handleAddInterview" />
+    <div class="interview-managementactions">
+      <CommonButton label="新增面試" size="lg" @click="toggleAddModal(true)" />
     </div>
-    <div class="interview-managementfilters flex justify-between mb-4">
+    <div class="interview-managementfilters">
       <CommonSelect :options="selectData" v-model="selected" />
       <TextField
         v-model="searchText"
@@ -15,13 +15,25 @@
     <div class="interview-managementlist-container">
       <ListContainer />
     </div>
+    <CommonModal v-model:isVisible="showAddModal" title="新增面試" :width="400">
+      <AddInterviewModal @form-submitted="toggleAddModal(false)" />
+    </CommonModal>
     <CommonModal
-      v-model:isVisible="showModal"
-      title="新增面試"
-      :width="400"
-      @close-modal="closeModal"
+      v-model:isVisible="showDeleteModal"
+      title="確定刪除？"
+      :width="350"
     >
-      <AddInterviewModal />
+      <DeleteInterviewModal @item-deleted="toggleDeleteModal(false)" />
+    </CommonModal>
+    <CommonModal
+      v-model:isVisible="showEditModal"
+      title="編輯面試"
+      :width="480"
+    >
+      <EditInterviewModal
+        :item="currentEditItem"
+        @form-submitted="toggleEditModal(false)"
+      />
     </CommonModal>
   </div>
 </template>
@@ -32,9 +44,11 @@ import CommonSelect from "../../components/select/CommonSelect.vue";
 import TextField from "../../components/textfield/TextField.vue";
 import ListContainer from "./containers/ListContainer.vue";
 import CommonModal from "../../components/modal/CommonModal.vue";
-import AddInterviewModal from "./modal/AddInterviewModal.vue";
+import AddInterviewModal from "./components/modal/AddInterviewModal.vue";
+import DeleteInterviewModal from "./components/modal/DeleteInterviewModal.vue";
+import EditInterviewModal from "./components/modal/EditInterviewModal.vue";
 import magnify from "../../assets/magnify.svg";
-import { selectData } from "../../data";
+import { SELECT_DATA } from "./constant";
 
 export default {
   components: {
@@ -44,23 +58,26 @@ export default {
     TextField,
     ListContainer,
     AddInterviewModal,
+    DeleteInterviewModal,
+    EditInterviewModal,
   },
   data() {
     return {
       magnify,
-      showModal: false,
       selected: "all",
       searchText: "",
-      selectData,
+      selectData: SELECT_DATA,
     };
   },
+  computed: {
+    ...mapState({
+      showAddModal: (state) => state.interview.showAddModal,
+      showDeleteModal: (state) => state.interview.showDeleteModal,
+      showEditModal: (state) => state.interview.showEditModal,
+    }),
+  },
   methods: {
-    handleAddInterview() {
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
-    },
+    ...mapActions(["toggleAddModal", "toggleDeleteModal", "toggleEditModal"]),
   },
 };
 </script>

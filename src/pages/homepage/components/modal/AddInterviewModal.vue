@@ -12,10 +12,13 @@
     <div class="form__group">
       <label class="form__label" for="position">面試職位</label>
       <select v-model="formData.position" class="form__input">
-        <option disabled value="">請選擇面試職位</option>
-        <option value="前端工程師">前端工程師</option>
-        <option value="UIUX設計師">UIUX設計師</option>
-        <option value="全端設計師">全端設計師</option>
+        <option
+          v-for="position in positions"
+          :key="position.value"
+          :value="position.value"
+        >
+          {{ position.label }}
+        </option>
       </select>
     </div>
 
@@ -23,25 +26,31 @@
       <label class="form__label" for="interviewDate">面試日期</label>
       <input v-model="formData.interviewDate" type="date" class="form__input" />
     </div>
+    <span class="form__error-message">
+      {{ errors.message }}
+    </span>
 
-    <CommonButton label="儲存" />
+    <CommonButton label="儲存" @click="saveFormData" />
   </div>
 </template>
 
 <script>
-import CommonButton from "../../../components/button/CommonButton.vue";
+import CommonButton from "../../../../components/button/CommonButton.vue";
+import { POSITIONS } from "../../constant";
 
 export default {
   components: { CommonButton },
-
   data() {
     return {
-      formData: {
-        companyName: "",
-        position: "",
-        interviewDate: "",
-      },
+      positions: POSITIONS,
+      errors: {},
     };
+  },
+  computed: {
+    ...mapState("interview", ["formData", "positions"]),
+  },
+  methods: {
+    ...mapActions("interview", ["saveFormData"]),
   },
 };
 </script>

@@ -11,25 +11,33 @@
 
     <div class="form__group">
       <label class="form__label" for="position">面試職位</label>
-      <select class="form__input">
-        <option value="前端工程師">前端工程師</option>
-        <option value="UIUX設計師">UIUX設計師</option>
-        <option value="全端設計師">全端設計師</option>
+      <select v-model="formData.position" class="form__input">
+        <option
+          v-for="position in positions"
+          :key="position.value"
+          :value="position.value"
+        >
+          {{ position.label }}
+        </option>
       </select>
     </div>
 
     <div class="form__group">
       <label class="form__label" for="status">狀態</label>
-      <CommonSelect :options="statusGroup" class="form__select" />
+      <CommonSelect
+        v-model="formData.status"
+        :options="statusGroup"
+        class="form__select"
+      />
     </div>
 
     <div class="form__group">
       <label class="form__label" for="interviewDate">面試日期</label>
-      <input type="date" class="form__input" />
+      <input v-model="formData.interviewDate" type="date" class="form__input" />
     </div>
 
     <span class="form__error-message">
-      {{ errors.position }}
+      {{ errors.message }}
     </span>
 
     <CommonButton label="儲存" />
@@ -37,25 +45,25 @@
 </template>
 
 <script>
-import CommonModal from "../../../components/modal/CommonModal.vue";
-import CommonButton from "../../../components/button/CommonButton.vue";
-import CommonSelect from "../../../components/select/CommonSelect.vue";
-import { statusGroup } from "../../../data";
+import CommonButton from "../../../../components/button/CommonButton.vue";
+import CommonSelect from "../../../../components/select/CommonSelect.vue";
+import { POSITIONS, STATUS_GROUP } from "../../constant";
 
 export default {
-  components: { CommonModal, CommonButton, CommonSelect },
+  components: { CommonButton, CommonSelect },
 
   data() {
     return {
-      formData: {
-        companyName: "",
-        position: "前端工程師",
-        interviewDate: "",
-      },
-      selected: "none",
-      statusGroup,
+      statusGroup: STATUS_GROUP,
+      positions: POSITIONS,
       errors: {},
     };
+  },
+  computed: {
+    ...mapState("interview", ["formData", "positions", "statusGroup"]),
+  },
+  methods: {
+    ...mapActions("interview", ["updateFormData"]),
   },
 };
 </script>
