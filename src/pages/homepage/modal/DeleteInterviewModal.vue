@@ -2,7 +2,7 @@
   <div>
     <div class="modal-content">
       <p>刪除的面試紀錄無法恢復</p>
-      <CommonButton size="sm" label="確認" @click="handleDelete" />
+      <CommonButton size="sm" label="確認" />
     </div>
   </div>
 </template>
@@ -15,12 +15,6 @@ export default {
   components: {
     CommonModal,
     CommonButton,
-  },
-
-  methods: {
-    handleDelete() {
-      this.$emit("item-deleted");
-    },
   },
 };
 </script>

@@ -3,7 +3,6 @@
     <div class="form__group">
       <label class="form__label">公司名稱</label>
       <input
-        v-model="formData.companyName"
         :class="{ 'form__input--error': errors.companyName }"
         class="form__input"
         placeholder="請輸入公司名稱"
@@ -12,7 +11,7 @@
 
     <div class="form__group">
       <label class="form__label" for="position">面試職位</label>
-      <select v-model="formData.position" class="form__input">
+      <select class="form__input">
         <option value="前端工程師">前端工程師</option>
         <option value="UIUX設計師">UIUX設計師</option>
         <option value="全端設計師">全端設計師</option>
@@ -21,23 +20,19 @@
 
     <div class="form__group">
       <label class="form__label" for="status">狀態</label>
-      <CommonSelect
-        :options="statusGroup"
-        v-model="selected"
-        class="form__select"
-      />
+      <CommonSelect :options="statusGroup" class="form__select" />
     </div>
 
     <div class="form__group">
       <label class="form__label" for="interviewDate">面試日期</label>
-      <input v-model="formData.interviewDate" type="date" class="form__input" />
+      <input type="date" class="form__input" />
     </div>
 
-    <span v-if="errors.position" class="form__error-message">
+    <span class="form__error-message">
       {{ errors.position }}
     </span>
 
-    <CommonButton label="儲存" @click="submitForm" />
+    <CommonButton label="儲存" />
   </div>
 </template>
 
@@ -45,6 +40,7 @@
 import CommonModal from "../../../components/modal/CommonModal.vue";
 import CommonButton from "../../../components/button/CommonButton.vue";
 import CommonSelect from "../../../components/select/CommonSelect.vue";
+import { statusGroup } from "../../../data";
 
 export default {
   components: { CommonModal, CommonButton, CommonSelect },
@@ -57,39 +53,9 @@ export default {
         interviewDate: "",
       },
       selected: "none",
-      statusGroup: [
-        { id: "1", value: "none", label: "無" },
-        { id: "2", value: "no_soundcard", label: "無聲卡" },
-        { id: "3", value: "not_hired", label: "未錄取" },
-        { id: "4", value: "hired", label: "已錄取" },
-      ],
+      statusGroup,
       errors: {},
     };
-  },
-
-  methods: {
-    //表單驗證邏輯 之後移植vuex
-    validateForm() {
-      this.errors = {};
-      this.errors.companyName = !this.formData.companyName.trim()
-        ? "公司名稱是必填項"
-        : /[!@#$%^&*(),.?":{}|<>]/g.test(this.formData.companyName)
-        ? "公司名稱不能包含特殊符號"
-        : "";
-      this.errors.position = !this.formData.position ? "請選擇面試職位" : "";
-      this.errors.interviewDate = !this.formData.interviewDate
-        ? "請選擇面試日期"
-        : "";
-
-      return Object.values(this.errors).every((error) => !error);
-    },
-
-    submitForm() {
-      console.log("Hi");
-      if (this.validateForm()) {
-        this.$emit("form-submitted");
-      }
-    },
   },
 };
 </script>

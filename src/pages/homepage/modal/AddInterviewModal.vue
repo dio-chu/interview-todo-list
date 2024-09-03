@@ -4,7 +4,6 @@
       <label class="form__label">公司名稱</label>
       <input
         v-model="formData.companyName"
-        :class="{ 'form__input--error': errors.companyName }"
         class="form__input"
         placeholder="請輸入公司名稱"
       />
@@ -25,20 +24,15 @@
       <input v-model="formData.interviewDate" type="date" class="form__input" />
     </div>
 
-    <span v-if="errors.position" class="form__error-message">
-      {{ errors.position }}
-    </span>
-
-    <CommonButton label="儲存" @click="submitForm" />
+    <CommonButton label="儲存" />
   </div>
 </template>
 
 <script>
-import CommonModal from "../../../components/modal/CommonModal.vue";
 import CommonButton from "../../../components/button/CommonButton.vue";
 
 export default {
-  components: { CommonModal, CommonButton },
+  components: { CommonButton },
 
   data() {
     return {
@@ -47,33 +41,7 @@ export default {
         position: "",
         interviewDate: "",
       },
-      errors: {},
     };
-  },
-
-  methods: {
-    validateForm() {
-      //表單驗證邏輯 之後移植vuex
-      this.errors = {};
-      this.errors.companyName = !this.formData.companyName.trim()
-        ? "公司名稱是必填項"
-        : /[!@#$%^&*(),.?":{}|<>]/g.test(this.formData.companyName)
-        ? "公司名稱不能包含特殊符號"
-        : "";
-      this.errors.position = !this.formData.position ? "請選擇面試職位" : "";
-      this.errors.interviewDate = !this.formData.interviewDate
-        ? "請選擇面試日期"
-        : "";
-
-      return Object.values(this.errors).every((error) => !error);
-    },
-
-    submitForm() {
-      console.log("Hi");
-      if (this.validateForm()) {
-        this.$emit("form-submitted");
-      }
-    },
   },
 };
 </script>
@@ -108,15 +76,5 @@ export default {
   margin: 0rem 1.5rem;
   padding: 8px;
   flex: 1;
-}
-
-.form__input--error {
-  border: 1px solid rgb(229, 68, 68);
-}
-
-.form__error-message {
-  color: rgb(229, 68, 68);
-  font-size: 0.8em;
-  margin-top: 4px;
 }
 </style>
