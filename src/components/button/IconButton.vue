@@ -64,6 +64,7 @@ export default {
   border: none;
   border-radius: 50%;
   padding: 0;
+  background-color: rgb(255, 255, 255);
 }
 
 .clickable {
