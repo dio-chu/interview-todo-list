@@ -16,7 +16,7 @@
   />
   <div class="interview-management">
     <div class="interview-managementactions">
-      <CommonButton label="新增面試" size="lg" @click="toggleAddModal(true)" />
+      <CommonButton label="新增面試" size="lg" @click="openAddModal" />
     </div>
     <div class="interview-managementfilters">
       <CommonSelect :options="selectData" v-model="selectFilterModel" />
@@ -94,16 +94,24 @@ export default {
       "toggleDeleteModal",
       "toggleEditModal",
     ]),
-    ...mapActions("interview", ["setSelectFilter", "setSearchText"]),
+    ...mapActions("interview", [
+      "setSelectFilter",
+      "setSearchText",
+      "addInterview",
+      "clearErrors",
+    ]),
+    openAddModal() {
+      this.resetForm();
+      this.toggleAddModal(true);
+    },
     handleFormSubmit(formData) {
-      this.formData = formData;
-      this.v$.$validate();
+      this.v$.$validate(); // 驗證表單
       if (!this.v$.$error) {
-        this.$store.commit("interview/clearErrors");
-        this.$store.dispatch("interview/addInterview", this.formData);
-        this.toggleAddModal(false);
+        this.clearErrors(); // 清除錯誤訊息
+        this.addInterview(formData); // 提交表單資料到 Vuex
+        this.toggleAddModal(false); // 關閉 Modal
       } else {
-        this.processValidationErrors();
+        this.processValidationErrors(); // 處理驗證錯誤
       }
     },
     handleUpdateForm(updatedData) {

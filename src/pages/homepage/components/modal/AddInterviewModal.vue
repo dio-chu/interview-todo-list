@@ -67,18 +67,11 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      formData: {
-        company: "",
-        position: "",
-        interviewDate: "",
-      },
-      positions: POSITIONS,
-    };
-  },
   computed: {
-    ...mapState("interview", ["errors"]),
+    ...mapState("interview", ["formData", "errors"]),
+    position() {
+      return POSITIONS;
+    },
   },
   watch: {
     isVisible(newValue) {

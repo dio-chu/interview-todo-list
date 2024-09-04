@@ -7,6 +7,12 @@ import {
 import { setPendingInterviewStatus } from "../../pages/homepage/utils/statusUtils";
 
 const state = {
+  formData: {
+    id: null,
+    company: "",
+    position: "",
+    interviewDate: "",
+  },
   editItem: null,
   errors: {},
   selectFilter: "all",
@@ -60,6 +66,21 @@ const state = {
 };
 
 const mutations = {
+  setFormData(state, formData) {
+    state.formData = formData;
+  },
+  setErrors(state, errors) {
+    state.errors = errors;
+  },
+  setEditItem(state, item) {
+    state.editItem = item;
+  },
+  setSelectFilter(state, filter) {
+    state.selectFilter = filter;
+  },
+  setSearchText(state, text) {
+    state.searchText = text;
+  },
   toggleItemSelection(state, itemId) {
     const item = state.data.find((i) => i.id === itemId);
     if (item) {
@@ -71,9 +92,7 @@ const mutations = {
       item.isSelected = isSelected;
     });
   },
-  setErrors(state, errors) {
-    state.errors = errors;
-  },
+
   clearErrors(state) {
     state.errors = {};
   },
@@ -83,24 +102,29 @@ const mutations = {
   addInterview(state, newItem) {
     state.data.push(newItem);
   },
-  setEditItem(state, item) {
-    state.editItem = item;
-  },
+
   updateInterview(state, updatedItem) {
     const index = state.data.findIndex((item) => item.id === updatedItem.id);
     if (index !== -1) {
       state.data.splice(index, 1, updatedItem);
     }
   },
-  setSelectFilter(state, filter) {
-    state.selectFilter = filter;
-  },
-  setSearchText(state, text) {
-    state.searchText = text;
-  },
 };
 
 const actions = {
+  setEditItem({ commit }, item) {
+    commit("setEditItem", item);
+  },
+  setSelectFilter({ commit }, filter) {
+    commit("setSelectFilter", filter);
+  },
+  setSearchText({ commit }, text) {
+    commit("setSearchText", text);
+  },
+  resetForm({ commit }) {
+    commit("setFormData", { company: "", position: "", interviewDate: "" });
+    commit("clearErrors");
+  },
   toggleItemSelection({ commit }, itemId) {
     commit("toggleItemSelection", itemId);
   },
@@ -131,9 +155,7 @@ const actions = {
     newItem.status = initialStatus;
     commit("addInterview", newItem);
   },
-  setEditItem({ commit }, item) {
-    commit("setEditItem", item);
-  },
+
   updateInterview({ commit }, updatedItem) {
     const positionLabel = getPositionLabelFromValue(
       updatedItem.position,
@@ -155,12 +177,6 @@ const actions = {
     );
     updatedData.status = finalStatus;
     commit("updateInterview", updatedData);
-  },
-  setSelectFilter({ commit }, filter) {
-    commit("setSelectFilter", filter);
-  },
-  setSearchText({ commit }, text) {
-    commit("setSearchText", text);
   },
 };
 const getters = {
