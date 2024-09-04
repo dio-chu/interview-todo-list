@@ -1,33 +1,37 @@
 <template>
   <div class="list-container">
-    <slot name="header" v-bind="{ headers, needShowCheckbox, isAllSelected }">
-      <ListHeader
-        :headers="headers"
-        :needShowCheckbox="needShowCheckbox"
-        :isChecked="isAllSelected"
-        @update:isChecked="$emit('toggle-all', $event)"
-    /></slot>
-    <template v-for="item in data" :key="item.id">
-      <slot
-        name="item"
-        v-bind="{ item, headers, needShowCheckbox, columnColors }"
-      >
-        <ListItem
-          :item="item"
-          :columns="headers"
+    <div class="list-header-container">
+      <slot name="header" v-bind="{ headers, needShowCheckbox, isAllSelected }">
+        <ListHeader
+          :headers="headers"
           :needShowCheckbox="needShowCheckbox"
-          :isSelected="item.isSelected"
-          :colors="columnColors"
-          @toggleItem="$emit('toggle-item', item.id)"
+          :isChecked="isAllSelected"
+          @update:isChecked="$emit('toggle-all', $event)"
+      /></slot>
+    </div>
+    <div class="list-items-container">
+      <template v-for="item in data" :key="item.id">
+        <slot
+          name="item"
+          v-bind="{ item, headers, needShowCheckbox, columnColors }"
         >
-          <template v-for="header in headers" v-slot:[header.key]="{ item }">
-            <slot :name="header.key" :item="item">
-              {{ item[header.key] }}
-            </slot>
-          </template>
-        </ListItem>
-      </slot>
-    </template>
+          <ListItem
+            :item="item"
+            :columns="headers"
+            :needShowCheckbox="needShowCheckbox"
+            :isSelected="item.isSelected"
+            :colors="columnColors"
+            @toggleItem="$emit('toggle-item', item.id)"
+          >
+            <template v-for="header in headers" v-slot:[header.key]="{ item }">
+              <slot :name="header.key" :item="item">
+                {{ item[header.key] }}
+              </slot>
+            </template>
+          </ListItem>
+        </slot>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -78,6 +82,17 @@ export default {
   padding: 2rem 1rem;
   position: relative;
   overflow: hidden;
+}
+
+.list-header-container {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+.list-items-container {
+  overflow-y: auto;
+  max-height: 500px;
 }
 .list-container::before,
 .list-container::after {
