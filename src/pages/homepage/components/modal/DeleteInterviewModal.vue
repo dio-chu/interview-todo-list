@@ -7,8 +7,9 @@
   >
     <div class="modal-content">
       <p>刪除的面試紀錄無法恢復</p>
-      <CommonButton size="sm" label="確認" @click="confirmDelete" /></div
-  ></CommonModal>
+      <CommonButton size="sm" label="確認" @click="confirmDelete" />
+    </div>
+  </CommonModal>
 </template>
 
 <script>
@@ -32,20 +33,7 @@ export default {
     },
     confirmDelete() {
       this.$emit("confirm-delete");
-      this.closeModal();
     },
   },
 };
 </script>
-
-<style scoped>
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.modal-content button {
-  margin-top: 1rem;
-}
-</style>

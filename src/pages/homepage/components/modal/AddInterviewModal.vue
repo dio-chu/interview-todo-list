@@ -14,9 +14,6 @@
           placeholder="請輸入公司名稱"
         />
       </div>
-      <span v-show="errors.company" class="form__error-message">
-        {{ errors.company }}
-      </span>
       <div class="form__group">
         <label class="form__label" for="position">面試職位</label>
         <select v-model="formData.position" class="form__input">
@@ -30,9 +27,6 @@
           </option>
         </select>
       </div>
-      <span v-show="errors.position" class="form__error-message">
-        {{ errors.position }}
-      </span>
       <div class="form__group">
         <label class="form__label" for="interviewDate">面試日期</label>
         <input
@@ -41,10 +35,7 @@
           class="form__input"
         />
       </div>
-      <span v-show="errors.interviewDate" class="form__error-message">
-        {{ errors.interviewDate }}
-      </span>
-      <CommonButton label="儲存" @click="submitForm" />
+      <CommonButton label="儲存" />
     </div>
   </CommonModal>
 </template>
@@ -80,27 +71,9 @@ export default {
   computed: {
     ...mapState("interview", ["errors"]),
   },
-  watch: {
-    isVisible(newValue) {
-      if (newValue) {
-        this.resetForm();
-      }
-    },
-  },
   methods: {
     closeModal() {
       this.$emit("close-modal");
-    },
-    submitForm() {
-      this.$emit("submit-form", this.formData);
-    },
-    resetForm() {
-      this.formData = {
-        company: "",
-        position: "",
-        interviewDate: "",
-      };
-      this.$store.commit("interview/clearErrors");
     },
   },
 };

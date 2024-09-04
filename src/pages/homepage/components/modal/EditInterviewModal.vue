@@ -14,9 +14,6 @@
           placeholder="請輸入公司名稱"
         />
       </div>
-      <span v-show="errors.company" class="form__error-message">
-        {{ errors.company }}
-      </span>
       <div class="form__group">
         <label class="form__label" for="position">面試職位</label>
         <select v-model="formData.position" class="form__input">
@@ -29,9 +26,6 @@
           </option>
         </select>
       </div>
-      <span v-show="errors.position" class="form__error-message">
-        {{ errors.position }}
-      </span>
       <div class="form__group">
         <label class="form__label" for="status">狀態</label>
         <CommonSelect
@@ -48,11 +42,8 @@
           class="form__input"
         />
       </div>
-      <span v-show="errors.interviewDate" class="form__error-message">
-        {{ errors.interviewDate }}
-      </span>
 
-      <CommonButton label="儲存" @click="updateForm" />
+      <CommonButton label="儲存" />
     </div>
   </CommonModal>
 </template>
@@ -63,10 +54,7 @@ import CommonButton from "../../../../components/button/CommonButton.vue";
 import CommonSelect from "../../../../components/select/CommonSelect.vue";
 import CommonModal from "../../../../components/modal/CommonModal.vue";
 import { POSITIONS, STATUS_GROUP } from "../../constant";
-import {
-  getPositionValueFromLabel,
-  getStatusValueFromLabel,
-} from "../..//utils/transform";
+
 export default {
   components: { CommonButton, CommonSelect, CommonModal },
   props: {
@@ -78,7 +66,6 @@ export default {
   data() {
     return {
       formData: {
-        id: null,
         company: "",
         position: "",
         status: "",
@@ -89,38 +76,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("interview", ["errors", "editItem"]),
-  },
-  watch: {
-    editItem: {
-      immediate: true,
-      handler(newVal) {
-        if (newVal) {
-          let statusLabel = newVal.status;
-          // 如果狀態是 "等待面試" 或 "等待結果"，統一轉換為 "none"
-          if (statusLabel === "等待面試" || statusLabel === "等待結果") {
-            statusLabel = "無";
-          }
-          this.formData = {
-            id: newVal.id,
-            company: newVal.company,
-            position: getPositionValueFromLabel(
-              newVal.position,
-              this.positions
-            ),
-            status: getStatusValueFromLabel(statusLabel, this.statusGroup),
-            interviewDate: newVal.interviewDate,
-          };
-        }
-      },
-    },
+    ...mapState("interview", ["errors"]),
   },
   methods: {
     closeModal() {
       this.$emit("close-modal");
-    },
-    updateForm() {
-      this.$emit("update-form", this.formData);
     },
   },
 };

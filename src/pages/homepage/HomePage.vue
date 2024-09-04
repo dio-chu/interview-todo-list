@@ -34,23 +34,18 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 import CommonButton from "../../components/button/CommonButton.vue";
 import CommonSelect from "../../components/select/CommonSelect.vue";
 import TextField from "../../components/textfield/TextField.vue";
 import ListContainer from "./containers/ListContainer.vue";
 import magnify from "../../assets/magnify.svg";
-import { SELECT_DATA } from "./constant";
 import AddInterviewModal from "./components/modal/AddInterviewModal.vue";
 import EditInterviewModal from "./components/modal/EditInterviewModal.vue";
 import DeleteInterviewModal from "./components/modal/DeleteInterviewModal.vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
+import { SELECT_DATA } from "./constant";
 
 export default {
-  setup() {
-    return { v$: useVuelidate() };
-  },
   components: {
     CommonButton,
     CommonSelect,
@@ -69,7 +64,6 @@ export default {
   computed: {
     ...mapState("modal", ["showAddModal", "showDeleteModal", "showEditModal"]),
     ...mapState("interview", ["selectFilter", "searchText"]),
-    ...mapGetters("interview", ["anyItemSelected"]),
     selectFilterModel: {
       get() {
         return this.selectFilter;
@@ -87,7 +81,6 @@ export default {
       },
     },
   },
-
   methods: {
     ...mapActions("modal", [
       "toggleAddModal",
@@ -96,64 +89,16 @@ export default {
     ]),
     ...mapActions("interview", ["setSelectFilter", "setSearchText"]),
     handleFormSubmit(formData) {
-      this.formData = formData;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        this.$store.commit("interview/clearErrors");
-        this.$store.dispatch("interview/addInterview", this.formData);
-        this.toggleAddModal(false);
-      } else {
-        this.processValidationErrors();
-      }
+      this.$store.dispatch("interview/addInterview", formData);
+      this.toggleAddModal(false);
     },
     handleUpdateForm(updatedData) {
-      this.formData = updatedData;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        this.$store.commit("interview/clearErrors");
-        this.$store.dispatch("interview/updateInterview", this.formData);
-        this.toggleEditModal(false);
-      } else {
-        this.processValidationErrors();
-      }
-    },
-    processValidationErrors() {
-      const errors = {};
-      if (this.v$.formData.company.$error) {
-        errors.company = this.v$.formData.company.$errors[0].$message;
-      }
-      if (this.v$.formData.position.$error) {
-        errors.position = this.v$.formData.position.$errors[0].$message;
-      }
-      if (this.v$.formData.interviewDate.$error) {
-        errors.interviewDate =
-          this.v$.formData.interviewDate.$errors[0].$message;
-      }
-      this.$store.commit("interview/setErrors", errors);
+      this.$store.dispatch("interview/updateInterview", updatedData);
+      this.toggleEditModal(false);
     },
     handleConfirmDelete() {
       this.$store.dispatch("interview/deleteSelectedItems");
     },
-  },
-  validations() {
-    return {
-      formData: {
-        company: {
-          required: helpers.withMessage("公司名稱不能為空", required),
-
-          trimWhitespace: helpers.withMessage(
-            "公司名稱不能包含前後空白",
-            (value) => value.trim() === value
-          ),
-        },
-        position: {
-          required: helpers.withMessage("面試職位不能為空", required),
-        },
-        interviewDate: {
-          required: helpers.withMessage("面試日期不能為空", required),
-        },
-      },
-    };
   },
 };
 </script>

@@ -16,12 +16,7 @@
     @toggle-all="onToggleAll"
   >
     <template v-slot:edit="{ item }">
-      <IconButton
-        :disabled="false"
-        :icon="pencilIcon"
-        isClickable
-        @click="openEditModal(item)"
-      />
+      <IconButton :icon="pencilIcon" isClickable @click="openEditModal(item)" />
     </template>
 
     <template v-slot:status="{ item }">
@@ -52,7 +47,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("interview", ["headers", "columnColors", "data"]),
+    ...mapState("interview", ["headers", "columnColors"]),
     ...mapGetters("interview", [
       "anyItemSelected",
       "isAllSelected",
@@ -73,8 +68,7 @@ export default {
       this.toggleAllSelection(isSelected);
     },
     openEditModal(item) {
-      this.setEditItem(item); // 編輯的項目
-      console.log(item);
+      this.setEditItem(item);
       this.toggleEditModal(true);
     },
   },
