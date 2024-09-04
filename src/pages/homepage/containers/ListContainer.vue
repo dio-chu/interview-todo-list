@@ -8,19 +8,19 @@
   />
   <List
     :headers="headers"
-    :data="data"
-    needShowCheckbox
+    :data="processedData"
+    :needShowCheckbox="true"
     :columnColors="columnColors"
     :isAllSelected="isAllSelected"
-    @toggle-item="toggleItemSelection"
-    @toggle-all="toggleAllSelection"
+    @toggle-item="onToggleItem"
+    @toggle-all="onToggleAll"
   >
     <template v-slot:edit="{ item }">
       <IconButton
         :disabled="false"
         :icon="pencilIcon"
         isClickable
-        @click="toggleEditModal(item)"
+        @click="openEditModal(item)"
       />
     </template>
 
@@ -40,6 +40,7 @@ import IconButton from "../../../components/button/IconButton.vue";
 import pencilIcon from "../../../assets/pencil.svg";
 
 export default {
+  name: "ListContainer",
   components: {
     CommonButton,
     List,
@@ -52,15 +53,30 @@ export default {
   },
   computed: {
     ...mapState("interview", ["headers", "columnColors", "data"]),
-    ...mapGetters("interview", ["anyItemSelected", "isAllSelected"]),
+    ...mapGetters("interview", [
+      "anyItemSelected",
+      "isAllSelected",
+      "processedData",
+    ]),
   },
   methods: {
     ...mapActions("interview", [
       "toggleItemSelection",
       "toggleAllSelection",
-      "toggleDeleteModal",
-      "toggleEditModal",
+      "setEditItem",
     ]),
+    ...mapActions("modal", ["toggleDeleteModal", "toggleEditModal"]),
+    onToggleItem(itemId) {
+      this.toggleItemSelection(itemId);
+    },
+    onToggleAll(isSelected) {
+      this.toggleAllSelection(isSelected);
+    },
+    openEditModal(item) {
+      this.setEditItem(item); // 編輯的項目
+      console.log(item);
+      this.toggleEditModal(true);
+    },
   },
 };
 </script>
