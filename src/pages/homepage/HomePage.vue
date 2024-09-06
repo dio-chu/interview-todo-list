@@ -80,6 +80,7 @@ export default {
         return this.selectFilter;
       },
       set(value) {
+        this.clearAllSelections();
         this.setSelectFilter(value);
       },
     },
@@ -100,6 +101,7 @@ export default {
       "toggleEditModal",
       "setSelectFilter",
       "setSearchText",
+      "clearAllSelections",
     ]),
     handleFormSubmit(formData) {
       this.formData = formData;

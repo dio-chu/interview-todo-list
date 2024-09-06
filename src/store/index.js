@@ -74,16 +74,16 @@ const mutations = {
   setShowDeleteModal(state, payload) {
     state.showDeleteModal = payload;
   },
-  //interview
+  //interview select
   toggleItemSelection(state, itemId) {
     const item = state.data.find((i) => i.id === itemId);
     if (item) {
       item.isSelected = !item.isSelected;
     }
   },
-  toggleAllSelection(state, isSelected) {
+  clearAllSelections(state) {
     state.data.forEach((item) => {
-      item.isSelected = isSelected;
+      item.isSelected = false;
     });
   },
   setErrors(state, errors) {
@@ -126,13 +126,23 @@ const actions = {
   toggleDeleteModal({ commit }, payload) {
     commit("setShowDeleteModal", payload);
   },
-  //interview
+  //interview 勾選
   toggleItemSelection({ commit }, itemId) {
     commit("toggleItemSelection", itemId);
   },
-  toggleAllSelection({ commit }, isSelected) {
-    commit("toggleAllSelection", isSelected);
+  toggleAllSelection({ commit, getters }, isSelected) {
+    const processedItems = getters.processedData;
+    processedItems.forEach((item) => {
+      if (item.isSelected !== isSelected) {
+        commit("toggleItemSelection", item.id); // 確保所有 item 根據 isSelected 更新狀態
+      }
+    });
   },
+  clearAllSelections({ commit }) {
+    console.log("action");
+    commit("clearAllSelections");
+  },
+  //interview 增刪查改
   deleteSelectedItems({ commit }) {
     commit("deleteSelectedItems");
   },
@@ -192,7 +202,8 @@ const actions = {
 };
 const getters = {
   anyItemSelected: (state) => state.data.some((item) => item.isSelected),
-  isAllSelected: (state) => state.data.every((item) => item.isSelected),
+  isAllSelected: (_, getters) =>
+    getters.processedData.every((item) => item.isSelected),
   //排序相關
   sortedData: (state) => {
     return state.data.slice().sort((a, b) => {
