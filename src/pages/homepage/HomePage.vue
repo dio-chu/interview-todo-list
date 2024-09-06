@@ -104,7 +104,9 @@ export default {
       "clearAllSelections",
     ]),
     handleFormSubmit(formData) {
+      console.log(formData);
       this.formData = formData;
+      this.v$.$reset;
       this.v$.$validate();
       if (!this.v$.$error) {
         this.$store.commit("clearErrors");
@@ -116,6 +118,7 @@ export default {
     },
     handleUpdateForm(updatedData) {
       this.formData = updatedData;
+      this.v$.$reset;
       this.v$.$validate();
       if (!this.v$.$error) {
         this.$store.commit("clearErrors");
