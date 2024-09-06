@@ -52,20 +52,18 @@ export default {
     };
   },
   computed: {
-    ...mapState("interview", ["headers", "columnColors", "data"]),
-    ...mapGetters("interview", [
-      "anyItemSelected",
-      "isAllSelected",
-      "processedData",
-    ]),
+    ...mapState(["headers", "columnColors", "data"]),
+    ...mapGetters(["anyItemSelected", "isAllSelected", "processedData"]),
   },
   methods: {
-    ...mapActions("interview", [
+    ...mapActions([
+      "toggleDeleteModal",
+      "toggleEditModal",
       "toggleItemSelection",
       "toggleAllSelection",
       "setEditItem",
     ]),
-    ...mapActions("modal", ["toggleDeleteModal", "toggleEditModal"]),
+
     onToggleItem(itemId) {
       this.toggleItemSelection(itemId);
     },

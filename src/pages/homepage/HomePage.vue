@@ -67,9 +67,14 @@ export default {
     };
   },
   computed: {
-    ...mapState("modal", ["showAddModal", "showDeleteModal", "showEditModal"]),
-    ...mapState("interview", ["selectFilter", "searchText"]),
-    ...mapGetters("interview", ["anyItemSelected"]),
+    ...mapState([
+      "showAddModal",
+      "showDeleteModal",
+      "showEditModal",
+      "selectFilter",
+      "searchText",
+    ]),
+    ...mapGetters(["anyItemSelected"]),
     selectFilterModel: {
       get() {
         return this.selectFilter;
@@ -89,18 +94,19 @@ export default {
   },
 
   methods: {
-    ...mapActions("modal", [
+    ...mapActions([
       "toggleAddModal",
       "toggleDeleteModal",
       "toggleEditModal",
+      "setSelectFilter",
+      "setSearchText",
     ]),
-    ...mapActions("interview", ["setSelectFilter", "setSearchText"]),
     handleFormSubmit(formData) {
       this.formData = formData;
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.$store.commit("interview/clearErrors");
-        this.$store.dispatch("interview/addInterview", this.formData);
+        this.$store.commit("clearErrors");
+        this.$store.dispatch("addInterview", this.formData);
         this.toggleAddModal(false);
       } else {
         this.processValidationErrors();
@@ -110,8 +116,8 @@ export default {
       this.formData = updatedData;
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.$store.commit("interview/clearErrors");
-        this.$store.dispatch("interview/updateInterview", this.formData);
+        this.$store.commit("clearErrors");
+        this.$store.dispatch("updateInterview", this.formData);
         this.toggleEditModal(false);
       } else {
         this.processValidationErrors();
@@ -129,10 +135,10 @@ export default {
         errors.interviewDate =
           this.v$.formData.interviewDate.$errors[0].$message;
       }
-      this.$store.commit("interview/setErrors", errors);
+      this.$store.commit("setErrors", errors);
     },
     handleConfirmDelete() {
-      this.$store.dispatch("interview/deleteSelectedItems");
+      this.$store.dispatch("deleteSelectedItems");
     },
   },
   validations() {
@@ -140,7 +146,6 @@ export default {
       formData: {
         company: {
           required: helpers.withMessage("公司名稱不能為空", required),
-
           trimWhitespace: helpers.withMessage(
             "公司名稱不能包含前後空白",
             (value) => value.trim() === value

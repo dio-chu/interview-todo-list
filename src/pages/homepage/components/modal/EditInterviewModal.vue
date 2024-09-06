@@ -89,7 +89,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("interview", ["errors", "editItem"]),
+    ...mapState(["errors", "editItem"]),
   },
   watch: {
     editItem: {

@@ -78,7 +78,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("interview", ["errors"]),
+    ...mapState(["errors"]),
   },
   watch: {
     isVisible(newValue) {
@@ -100,7 +100,7 @@ export default {
         position: "",
         interviewDate: "",
       };
-      this.$store.commit("interview/clearErrors");
+      this.$store.commit("clearErrors");
     },
   },
 };
