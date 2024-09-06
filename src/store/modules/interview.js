@@ -154,6 +154,7 @@ const actions = {
       updatedData.interviewDate
     );
     updatedData.status = finalStatus;
+    console.log("final" + updatedData.status);
     commit("updateInterview", updatedData);
   },
   setSelectFilter({ commit }, filter) {
