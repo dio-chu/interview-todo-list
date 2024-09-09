@@ -33,8 +33,11 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions, mapGetters } from "vuex";
+<script setup>
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import { useVuelidate } from "@vuelidate/core";
+import { required, helpers } from "@vuelidate/validators";
 import CommonButton from "../../components/button/CommonButton.vue";
 import CommonSelect from "../../components/select/CommonSelect.vue";
 import TextField from "../../components/textfield/TextField.vue";
@@ -44,127 +47,97 @@ import { SELECT_DATA } from "./constant";
 import AddInterviewModal from "./components/modal/AddInterviewModal.vue";
 import EditInterviewModal from "./components/modal/EditInterviewModal.vue";
 import DeleteInterviewModal from "./components/modal/DeleteInterviewModal.vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
 
-export default {
-  setup() {
-    return { v$: useVuelidate() };
-  },
-  components: {
-    CommonButton,
-    CommonSelect,
-    TextField,
-    ListContainer,
-    AddInterviewModal,
-    EditInterviewModal,
-    DeleteInterviewModal,
-  },
-  data() {
-    return {
-      magnify,
-      selectData: SELECT_DATA,
-    };
-  },
-  computed: {
-    ...mapState([
-      "showAddModal",
-      "showDeleteModal",
-      "showEditModal",
-      "selectFilter",
-      "searchText",
-    ]),
-    ...mapGetters(["anyItemSelected"]),
-    selectFilterModel: {
-      get() {
-        return this.selectFilter;
-      },
-      set(value) {
-        this.clearAllSelections();
-        this.setSelectFilter(value);
-      },
-    },
-    searchTextModel: {
-      get() {
-        return this.searchText;
-      },
-      set(value) {
-        this.setSearchText(value);
-      },
-    },
-  },
+const store = useStore();
 
-  methods: {
-    ...mapActions([
-      "toggleAddModal",
-      "toggleDeleteModal",
-      "toggleEditModal",
-      "setSelectFilter",
-      "setSearchText",
-      "clearAllSelections",
-    ]),
-    handleFormSubmit(formData) {
-      console.log(formData);
-      this.formData = formData;
-      this.v$.$reset;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        this.$store.commit("clearErrors");
-        this.$store.dispatch("addInterview", this.formData);
-        this.toggleAddModal(false);
-      } else {
-        this.processValidationErrors();
-      }
+const selectData = ref(SELECT_DATA);
+const formData = ref({});
+
+const showAddModal = computed(() => store.state.showAddModal);
+const showDeleteModal = computed(() => store.state.showDeleteModal);
+const showEditModal = computed(() => store.state.showEditModal);
+
+const selectFilterModel = computed({
+  get: () => store.state.selectFilter,
+  set: (value) => {
+    store.dispatch("clearAllSelections");
+    store.dispatch("setSelectFilter", value);
+  },
+});
+
+const searchTextModel = computed({
+  get: () => store.state.searchText,
+  set: (value) => store.dispatch("setSearchText", value),
+});
+
+const rules = {
+  formData: {
+    company: {
+      required: helpers.withMessage("公司名稱不能為空", required),
+      trimWhitespace: helpers.withMessage(
+        "公司名稱不能包含前後空白",
+        (value) => value.trim() === value
+      ),
     },
-    handleUpdateForm(updatedData) {
-      this.formData = updatedData;
-      this.v$.$reset;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        this.$store.commit("clearErrors");
-        this.$store.dispatch("updateInterview", this.formData);
-        this.toggleEditModal(false);
-      } else {
-        this.processValidationErrors();
-      }
+    position: {
+      required: helpers.withMessage("面試職位不能為空", required),
     },
-    processValidationErrors() {
-      const errors = {};
-      if (this.v$.formData.company.$error) {
-        errors.company = this.v$.formData.company.$errors[0].$message;
-      }
-      if (this.v$.formData.position.$error) {
-        errors.position = this.v$.formData.position.$errors[0].$message;
-      }
-      if (this.v$.formData.interviewDate.$error) {
-        errors.interviewDate =
-          this.v$.formData.interviewDate.$errors[0].$message;
-      }
-      this.$store.commit("setErrors", errors);
-    },
-    handleConfirmDelete() {
-      this.$store.dispatch("deleteSelectedItems");
+    interviewDate: {
+      required: helpers.withMessage("面試日期不能為空", required),
     },
   },
-  validations() {
-    return {
-      formData: {
-        company: {
-          required: helpers.withMessage("公司名稱不能為空", required),
-          trimWhitespace: helpers.withMessage(
-            "公司名稱不能包含前後空白",
-            (value) => value.trim() === value
-          ),
-        },
-        position: {
-          required: helpers.withMessage("面試職位不能為空", required),
-        },
-        interviewDate: {
-          required: helpers.withMessage("面試日期不能為空", required),
-        },
-      },
-    };
-  },
+};
+
+const v$ = useVuelidate(rules, { formData });
+
+const toggleAddModal = (value) => store.dispatch("toggleAddModal", value);
+const toggleDeleteModal = (value) => store.dispatch("toggleDeleteModal", value);
+const toggleEditModal = (value) => store.dispatch("toggleEditModal", value);
+
+const handleFormSubmit = async (data) => {
+  formData.value = data;
+  const isFormCorrect = await v$.value.$validate();
+  if (isFormCorrect) {
+    console.log("表單驗證通過");
+    store.commit("clearErrors");
+    store.dispatch("addInterview", formData.value);
+    toggleAddModal(false);
+  } else {
+    console.log("表單驗證失敗");
+    processValidationErrors();
+  }
+};
+
+const handleUpdateForm = async (updatedData) => {
+  formData.value = updatedData;
+  v$.value.$reset();
+  const isFormCorrect = await v$.value.$validate();
+  if (isFormCorrect) {
+    store.commit("clearErrors");
+    store.dispatch("updateInterview", formData.value);
+    v$.value.$reset();
+    toggleEditModal(false);
+  } else {
+    processValidationErrors();
+  }
+};
+
+const processValidationErrors = () => {
+  const errors = {};
+  if (v$.value.formData.company.$error) {
+    errors.company = v$.value.formData.company.$errors[0].$message;
+  }
+  if (v$.value.formData.position.$error) {
+    errors.position = v$.value.formData.position.$errors[0].$message;
+  }
+  if (v$.value.formData.interviewDate.$error) {
+    errors.interviewDate = v$.value.formData.interviewDate.$errors[0].$message;
+  }
+  store.commit("setErrors", errors);
+};
+
+const handleConfirmDelete = () => {
+  store.dispatch("deleteSelectedItems");
 };
 </script>
 

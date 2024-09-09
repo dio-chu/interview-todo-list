@@ -14,7 +14,7 @@
           placeholder="請輸入公司名稱"
         />
       </div>
-      <span v-show="errors.company" class="form__error-message">
+      <span v-if="errors.company" class="form__error-message">
         {{ errors.company }}
       </span>
       <div class="form__group">
@@ -30,7 +30,7 @@
           </option>
         </select>
       </div>
-      <span v-show="errors.position" class="form__error-message">
+      <span v-if="errors.position" class="form__error-message">
         {{ errors.position }}
       </span>
       <div class="form__group">
@@ -41,7 +41,7 @@
           class="form__input"
         />
       </div>
-      <span v-show="errors.interviewDate" class="form__error-message">
+      <span v-if="errors.interviewDate" class="form__error-message">
         {{ errors.interviewDate }}
       </span>
       <CommonButton label="儲存" @click="submitForm" />
